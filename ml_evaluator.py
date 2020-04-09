@@ -113,6 +113,7 @@ class MLEvaluator(object):
         s3_url = 's3://altena_evaluator_service/trained_models/{}/{}/{}'.format(self.user_name, self.model_name, self.instance_name)
         send_to_s3(s3_url, local_url)
         redis_client.set(run_name + "_trained_model", s3_url)
+        return s3_url
 
     def save_test_results(self, run_name, test_results):
         local_url = "{}.csv".format(run_name)
@@ -120,6 +121,7 @@ class MLEvaluator(object):
         test_results.to_csv('out.csv', index=False)
         send_to_s3(test_results, local_url)
         redis_client.set(run_name + "_test_results", s3_url)
+        return s3_url
 
     def run_k_crossfold_validation(self, k, shuffle=True, random_gen=1):
         data = self.data_from_s3(self.train_data_s3_key)

@@ -68,7 +68,7 @@ class MLEvaluator(object):
                               'test_data_s3_key': self.test_data_s3_key,
                              }
 
-        self.save_instance_info(instance_info)
+        self.save_instance_info(self.instance_info)
 
     def data_from_s3(self, s3_url):
         # In reality we would use boto

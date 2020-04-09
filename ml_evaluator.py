@@ -137,7 +137,7 @@ class MLEvaluator(object):
             trained_s3_url = self.save_trained_model(current_run.format(i) + 'trained_model', trained_model)
 
             # prepped_test = model.prep(test)
-            # test_results = model.test(prepped_test)
+            # test_results = model.test(prepped_test) #
             test_results = test_result_stub()
             tested_s3_url = self.save_test_results(current_run.format(i) + 'test_results', test_results)
             self.save_run_info(current_run, trained_s3_url, tested_s3_url)

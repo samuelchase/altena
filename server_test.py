@@ -5,9 +5,9 @@ import redis
 import pprint
 import json
 
-# import redis
-# redis_client = redis.Redis()
-# redis_client.flushdb()
+import redis
+redis_client = redis.Redis()
+redis_client.flushdb()
 
 print('checking...  /')
 response = requests.get('http://127.0.0.1:5000/')
@@ -18,10 +18,10 @@ print('initializing ML model...')
 
 d = {
      'user_name': 'sam',
-     'model_name': 'countyclassifier',
+     'model_name': 'countryclassifier',
      'instance_name': 'non_china_500_32',
      'hyperparams': [500, 32, 32],
-     'model_s3_key': 'countyclassifier.pkl',
+     'model_s3_key': 'countryclassifier.pkl',
      'train_data_s3_key': 'ds-project-test.csv',
      'test_data_s3_key': 'ds-project-train.csv',
      'k': 3
@@ -36,9 +36,9 @@ response = requests.get('http://127.0.0.1:5000/models/sam/')
 print(json.loads(response.content))
 
 print('\nget instances')
-response = requests.get('http://127.0.0.1:5000/instances/sam/county_classifier')
+response = requests.get('http://127.0.0.1:5000/instances/sam/countryclassifier')
 print(response.content)
 
 print('\nget runs')
-response = requests.get('http://127.0.0.1:5000/runs/sam/county_classifier/non_china_500_32')
+response = requests.get('http://127.0.0.1:5000/runs/sam/countryclassifier/non_china_500_32')
 print(response.content)

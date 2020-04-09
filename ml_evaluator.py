@@ -150,5 +150,5 @@ def trained_model_stub():
     pretend_trained_model = {'somemodel': 100}
     return pretend_trained_model
 
-def send_to_s3():
+def send_to_s3(s3_url, local_url):
     return

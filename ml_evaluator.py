@@ -129,7 +129,7 @@ class MLEvaluator(object):
             i += 1
 
     def save_run_info(self, run_name, trained_s3_url, tested_s3_url):
-        run_info = {'instance': self.instance_info,
+        run_info = {'instance': json.dumps(self.instance_info),
                      'run': {'name': run_name,
                              'trained_model': trained_s3_url,
                              'test_results': tested_s3_url

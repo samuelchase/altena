@@ -62,7 +62,7 @@ class MLEvaluator(object):
         self.instance_info = {'user_name': self.user_name,
                               'model_name': self.model_name,
                               'instance_name': self.instance_name,
-                              'hyperparameters': self.hyperparams,
+                              'hyperparameters': json.dumps(self.hyperparams),
                               'model_s3_key':self.model_s3_key,
                               'train_data_s3_key': self.train_data_s3_key,
                               'test_data_s3_key': self.test_data_s3_key,

@@ -35,7 +35,7 @@ def get_model_instances(user_name, model_name):
     return result
 
 def get_instance_runs(user_name, model_name, instance_name):
-    instance_names = get_model_instance_names(user_name, model_name)
+    instance_names = [s.decode('ascii') for s in get_model_instance_names(user_name, model_name)]
     full_instance_name = '{}_{}_{}'.format(user_name, model_name, instance_name)
     print(full_instance_name)
     if full_instance_name not in instance_names:

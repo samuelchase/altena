@@ -16,7 +16,7 @@ def get_user_models(user_name):
 
 def get_model_instance_names(user_name, model_name):
     models = [s.decode('ascii') for s in get_user_models(user_name)]
-    if model_name not in models:
+    if '{}_{}'.format(user_name, model_name) not in models:
         return []
 
     key = '{}_{}_instances'.format(user_name, model_name)

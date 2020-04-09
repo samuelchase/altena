@@ -10,10 +10,10 @@ print('initializing ML model')
 
 d = {
      'user_name': 'sam',
-     'model_name': 'county_classifier',
+     'model_name': 'countyclassifier',
      'instance_name': 'non_china_500_32',
      'hyperparams': [500, 32, 32],
-     'model_s3_key': 'county_classifier.pkl',
+     'model_s3_key': 'countyclassifier.pkl',
      'train_data_s3_key': 'ds-project-test.csv',
      'test_data_s3_key': 'ds-project-train.csv',
      'k': 10

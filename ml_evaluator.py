@@ -15,7 +15,7 @@ def get_user_models(user_name):
     return redis_client.lrange('{}_models'.format(user_name), 0, -1)
 
 def get_model_instance_names(user_name, model_name):
-    models = get_user_models(user_name, model_name)
+    models = get_user_models(user_name)
     if model_name not in models:
         return []
 

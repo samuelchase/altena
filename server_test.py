@@ -12,7 +12,8 @@ print('checking...  /')
 response = requests.get('http://127.0.0.1:5000/')
 print(response.content)
 
-print('initializing ML model')
+print('\n')
+print('initializing ML model...')
 
 d = {
      'user_name': 'sam',

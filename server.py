@@ -6,6 +6,7 @@ from ml_evaluator import get_user_models
 from ml_evaluator import MLEvaluator
 from flask import Flask
 from flask import jsonify
+from flask import request
 
 app = Flask(__name__)
 

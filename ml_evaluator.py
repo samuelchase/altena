@@ -5,6 +5,8 @@ import json
 import io
 import os
 import pickle
+import numpy as np
+from sklearn.model_selection import KFold
 
 redis_client = redis.Redis()
 
@@ -113,12 +115,14 @@ class MLEvaluator(object):
         for train, test in kfold.split(data):
             current_run = self.instance_name + "_run{}".format(i)
 
-            prepped_train = model.prep(train)
-            trained_model = model.train(prepped_train, *hyperparams)
+            # prepped_train = model.prep(train)
+            # trained_model = model.train(prepped_train, *hyperparams)
+            trained_model = trained_model_stub()
             trained_s3_url = self.save_trained_model(current_run.format(i) + 'trained_model', trained_model)
 
-            prepped_test = model.prep(test)
-            test_results = model.test(prepped_test)
+            # prepped_test = model.prep(test)
+            # test_results = model.test(prepped_test)
+            test_results = test_result_stub()
             tested_s3_url = self.save_test_results(current_run.format(i) + 'test_results', test_results)
             save_run_info(current_run, trained_s3_url, tested_s3_url)
             i += 1
@@ -134,3 +138,16 @@ class MLEvaluator(object):
         redis_client.hmset(run_name, run_info)
         k = '{}_{}_{}_runs'.format(self.user_name, self.model_name, self.instance_name)
         redis_client.lpush(k, current_run)
+
+
+def test_result_stub():
+    data = [['accuracy', 10], ['precision', 15], ['fscore', 14]]
+    df = pd.DataFrame(data, columns = ['evaluation_type', 'score'])
+    return df
+
+def trained_model_stub():
+    pretend_trained_model = {'somemodel': 100}
+    return pretend_trained_model
+
+def send_to_s3():
+    return

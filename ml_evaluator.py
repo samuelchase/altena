@@ -125,7 +125,7 @@ class MLEvaluator(object):
             # test_results = model.test(prepped_test)
             test_results = test_result_stub()
             tested_s3_url = self.save_test_results(current_run.format(i) + 'test_results', test_results)
-            save_run_info(current_run, trained_s3_url, tested_s3_url)
+            self.save_run_info(current_run, trained_s3_url, tested_s3_url)
             i += 1
 
     def save_run_info(self, run_name, trained_s3_url, tested_s3_url):

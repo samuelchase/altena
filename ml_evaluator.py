@@ -44,7 +44,10 @@ def get_instance_runs(user_name, model_name, instance_name):
     return runs
 
 def register_model(user_name, model_name):
-    redis_client.lpush('{}_models'.format(user_name), user_name + '_' + model_name)
+    full_model_name = user_name + '_' + model_name
+    models = redis_client.lrange('{}_models'.format(user_name), 0, -1)
+    if full_model_name not in models:
+        redis_client.lpush('{}_models'.format(user_name), full_model_name)
 
 
 class MLEvaluator(object):

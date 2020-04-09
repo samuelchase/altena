@@ -36,7 +36,7 @@ def get_model_instances(user_name, model_name):
 
 def get_instance_runs(user_name, model_name, instance_name):
     instance_names = get_model_instance_names(user_name, model_name)
-    if instance_name not in instance_names:
+    if '{}_{}_{}'.format(user_name, model_name, instance_name) not in instance_names:
         return []
 
     key = '{}_{}_{}_runs'.format(user_name, model_name, instance_name)

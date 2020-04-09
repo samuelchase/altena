@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import json
-from flask import Flask
-from app import routes
 from ml_evaluator import MLEvaluator, get_model_instances, register_model
+from flask import Flask
 
 app = Flask(__name__)
 

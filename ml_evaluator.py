@@ -68,7 +68,7 @@ class MLEvaluator(object):
                               'test_data_s3_key': self.test_data_s3_key,
                              }
 
-        self.save_instance_info(self.instance_info)
+        self.save_instance_info()
 
     def data_from_s3(self, s3_url):
         # In reality we would use boto
@@ -80,10 +80,10 @@ class MLEvaluator(object):
         return training_df.to_numpy()
 
     def save_instance_info(self):
-        k = '{}_{}_{}'.format(user_name, model_name, instance_name)
-        redis_client.hmset(k, instance_info)
-        k = '{}_{}_instances'.format(user_name, model_name)
-        redis_client.lpush(k, instance_name)
+        k = '{}_{}_{}'.format(self.user_name, self.model_name, self.instance_name)
+        redis_client.hmset(k, self.instance_info)
+        k = '{}_{}_instances'.format(self.user_name, self.model_name)
+        redis_client.lpush(k, self.instance_name)
 
     def load_model(self):
         # s3 = boto3.resource('s3')

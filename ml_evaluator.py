@@ -29,7 +29,7 @@ def get_model_instances(user_name, model_name):
 
     result = []
     for i in instance_names:
-        model_info = redis_client.hmget(i)
+        model_info = json.loads(redis_client.get(i))
         result.append(model_info)
     return result
 
@@ -40,7 +40,7 @@ def get_instance_runs(user_name, model_name, instance_name):
 
     key = '{}_{}_{}_runs'.format(user_name, model_name, instance_name)
     run_names = redis_client.lrange(key, 0, -1)
-    runs = [get_instance_run for r in run_names]
+    runs = [json.loads(redis_client.get(r)) for r in run_names]
     return runs
 
 def register_model(user_name, model_name):
@@ -63,7 +63,7 @@ class MLEvaluator(object):
         self.instance_info = {'user_name': self.user_name,
                               'model_name': self.model_name,
                               'instance_name': self.instance_name,
-                              'hyperparameters': json.dumps(self.hyperparams),
+                              'hyperparameters': self.hyperparams,
                               'model_s3_key':self.model_s3_key,
                               'train_data_s3_key': self.train_data_s3_key,
                               'test_data_s3_key': self.test_data_s3_key,
@@ -82,7 +82,7 @@ class MLEvaluator(object):
 
     def save_instance_info(self):
         k = '{}_{}_{}'.format(self.user_name, self.model_name, self.instance_name)
-        redis_client.hmset(k, self.instance_info)
+        redis_client.set(k, json.dumps(self.instance_info))
         k = '{}_{}_instances'.format(self.user_name, self.model_name)
         redis_client.lpush(k, self.instance_name)
 
@@ -129,14 +129,14 @@ class MLEvaluator(object):
             i += 1
 
     def save_run_info(self, run_name, trained_s3_url, tested_s3_url):
-        run_info = {'instance': json.dumps(self.instance_info),
-                     'run': {'name': run_name,
+        run_info = {'instance': self.instance_info,
+                     'run': json.dumps({'name': run_name,
                              'trained_model': trained_s3_url,
                              'test_results': tested_s3_url
-                             }
+                             })
                     }
         k = '{}_{}_{}_{}'.format(self.user_name, self.model_name, self.instance_name, run_name)
-        redis_client.hmset(run_name, run_info)
+        redis_client.set(run_name, run_info)
         k = '{}_{}_{}_runs'.format(self.user_name, self.model_name, self.instance_name)
         redis_client.lpush(k, current_run)
 

@@ -2,6 +2,8 @@
 
 import requests
 import redis
+import pprint
+import json
 
 redis_client = redis.Redis()
 
@@ -19,7 +21,7 @@ d = {
      'model_s3_key': 'countyclassifier.pkl',
      'train_data_s3_key': 'ds-project-test.csv',
      'test_data_s3_key': 'ds-project-train.csv',
-     'k': 10
+     'k': 3
 }
 
 
@@ -28,7 +30,7 @@ print(response.content)
 
 print('\nget models')
 response = requests.get('http://127.0.0.1:5000/models/sam/')
-print(response.content)
+print(json.loads(response.content))
 
 print('\nget instances')
 response = requests.get('http://127.0.0.1:5000/instances/sam/county_classifier')

@@ -91,8 +91,8 @@ class MLEvaluator(object):
         # with open(self.model_s3_key, 'wb') as data:
         #     s3.Bucket(self.model_s3_key).download_fileobj("tmp.pkl", data)
 
-        with open(self.model_s3_key, 'rb') as data:
-            return pickle.load(data)
+        # Stub
+        return {'model':100}
 
     def save_trained_model(self, run_name, trained_model):
         local_url = "{}.p".format(run_name)

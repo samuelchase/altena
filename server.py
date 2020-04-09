@@ -7,7 +7,6 @@ from flask import Flask
 app = Flask(__name__)
 
 @app.route('/')
-@app.route('/index')
 def index():
     return "Welcome to ML Evaluator -- Description of what the service does..."
 
@@ -21,7 +20,7 @@ def get_instances(user_name, model_name):
     return get_model_instances(model_name)
 
 @app.route('/runs/<user_name>/<model_name>/<instance_name>')
-def get_models(user_name, model_name, instance_name):
+def get_runs(user_name, model_name, instance_name):
     return get_model_runs(model_name)
 
 @app.route('/evaluator/kfold', methods=['POST'])

@@ -5,8 +5,9 @@ import redis
 import pprint
 import json
 
-redis_client = redis.Redis()
-redis_client.flushdb()
+# import redis
+# redis_client = redis.Redis()
+# redis_client.flushdb()
 
 print('checking...  /')
 response = requests.get('http://127.0.0.1:5000/')

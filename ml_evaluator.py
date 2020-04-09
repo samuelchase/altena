@@ -123,8 +123,8 @@ class MLEvaluator(object):
             save_run_info(current_run, trained_s3_url, tested_s3_url)
             i += 1
 
-     def save_run_info(self, run_name, trained_s3_url, tested_s3_url):
-         run_info = {'instance': self.instance_info,
+    def save_run_info(self, run_name, trained_s3_url, tested_s3_url):
+        run_info = {'instance': self.instance_info,
                      'run': {'name': run_name,
                              'trained_model': trained_s3_url,
                              'test_results': tested_s3_url
@@ -134,5 +134,3 @@ class MLEvaluator(object):
         redis_client.hmset(run_name, run_info)
         k = '{}_{}_{}_runs'.format(self.user_name, self.model_name, self.instance_name)
         redis_client.lpush(k, current_run)
-
-#cache hyperparameters with link to trained model and dataset trained on it

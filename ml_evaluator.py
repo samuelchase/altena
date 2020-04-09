@@ -87,6 +87,7 @@ class MLEvaluator(object):
         k = '{}_{}_{}'.format(self.user_name, self.model_name, self.instance_name)
         redis_client.set(k, json.dumps(self.instance_info))
         k = '{}_{}_instances'.format(self.user_name, self.model_name)
+        print(k)
         redis_client.lpush(k, self.instance_name)
 
     def load_model(self):

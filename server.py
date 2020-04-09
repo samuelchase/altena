@@ -32,9 +32,6 @@ def run_k_crossfold_validation():
 
     user_name = req_data['user_name']
     model_name = req_data['model_name']
-
-    register_model(user_name, model_name)
-
     instance_name = ['instance_name']
     hyperparams = req_data['hyperparams']
 
@@ -42,8 +39,10 @@ def run_k_crossfold_validation():
     train_data_s3_key = req_data['train_data_s3_key']
     test_data_s3_key = req_data['test_data_s3_key']
 
-    mle = MLEvaluator(model_name=model_name,
+    mle = MLEvaluator(user_name=user_name,
+                      model_name=model_name,
                       instance_name=instance_name,
+                      hyperparams=hyperparams,
                       model_s3_key=model_s3_key,
                       train_data_s3_key=train_data_s3_key,
                       test_data_s3_key=test_data_s3_key)

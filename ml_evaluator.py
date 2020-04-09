@@ -29,6 +29,7 @@ def get_model_instances(user_name, model_name):
 
     result = []
     for i in instance_names:
+        print(i)
         model_info = json.loads(redis_client.get(i))
         result.append(model_info)
     return result
@@ -140,8 +141,10 @@ class MLEvaluator(object):
                              })
                     }
         k = '{}_{}_{}_{}'.format(self.user_name, self.model_name, self.instance_name, run_name)
-        redis_client.set(run_name, json.dumps(run_info))
+        print('saving to {}'.format(k))
+        redis_client.set(k, json.dumps(run_info))
         k = '{}_{}_{}_runs'.format(self.user_name, self.model_name, self.instance_name)
+        print('pushing run to {}'.format(k))
         redis_client.lpush(k, run_name)
 
 

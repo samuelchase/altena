@@ -136,7 +136,7 @@ class MLEvaluator(object):
                              })
                     }
         k = '{}_{}_{}_{}'.format(self.user_name, self.model_name, self.instance_name, run_name)
-        redis_client.set(run_name, run_info)
+        redis_client.set(run_name, json.dumps(run_info))
         k = '{}_{}_{}_runs'.format(self.user_name, self.model_name, self.instance_name)
         redis_client.lpush(k, current_run)
 

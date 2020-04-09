@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import redis
 import json
-import boto3
+# import boto3
 import io
 import os
 import pickle

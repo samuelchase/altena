@@ -11,11 +11,14 @@ from sklearn.model_selection import KFold
 
 redis_client = redis.Redis()
 
+def blist_to_ascii(list):
+    return [s.decode('ascii') for s in list]
+
 def get_user_models(user_name):
     return redis_client.lrange('{}_models'.format(user_name), 0, -1)
 
 def get_model_instance_names(user_name, model_name):
-    models = [s.decode('ascii') for s in get_user_models(user_name)]
+    models = blist_to_ascii(get_user_models(user_name))
     if '{}_{}'.format(user_name, model_name) not in models:
         return []
 
@@ -23,7 +26,7 @@ def get_model_instance_names(user_name, model_name):
     return redis_client.lrange(key, 0, -1)
 
 def get_model_instances(user_name, model_name):
-    instance_names = [s.decode('ascii') for s in get_model_instance_names(user_name, model_name)]
+    instance_names = blist_to_ascii(get_model_instance_names(user_name, model_name))
     if not instance_names:
         return []
 
@@ -35,7 +38,7 @@ def get_model_instances(user_name, model_name):
     return result
 
 def get_instance_runs(user_name, model_name, instance_name):
-    instance_names = [s.decode('ascii') for s in get_model_instance_names(user_name, model_name)]
+    instance_names = blist_to_ascii(get_model_instance_names(user_name, model_name))
     full_instance_name = '{}_{}_{}'.format(user_name, model_name, instance_name)
     print(full_instance_name)
     if full_instance_name not in instance_names:
@@ -145,12 +148,12 @@ class MLEvaluator(object):
                              'test_results': tested_s3_url
                              })
                     }
-        k = '{}_{}_{}_{}'.format(self.user_name, self.model_name, self.instance_name, run_name)
+        full_run_name = '{}_{}_{}_{}'.format(self.user_name, self.model_name, self.instance_name, run_name)
         print('saving to {}'.format(k))
-        redis_client.set(k, json.dumps(run_info))
+        redis_client.set(full_run_name, json.dumps(run_info))
         k = '{}_{}_{}_runs'.format(self.user_name, self.model_name, self.instance_name)
         print('pushing run to {}'.format(k))
-        redis_client.lpush(k, run_name)
+        redis_client.lpush(k, full_run_name)
 
 
 def test_result_stub():

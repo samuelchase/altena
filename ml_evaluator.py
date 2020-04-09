@@ -101,7 +101,7 @@ class MLEvaluator(object):
         send_to_s3(s3_url, local_url)
         redis_client.set(run_name + "_trained_model", s3_url)
 
-    def save_test_results(self, run_name):
+    def save_test_results(self, run_name, test_results):
         local_url = "{}.csv".format(run_name)
         s3_url = 's3://altena_evaluator_service/test_results/{}/{}/{}'.format(self.user_name, self.model_name, self.instance_name)
         test_results.to_csv('out.csv', index=False)
@@ -151,4 +151,5 @@ def trained_model_stub():
     return pretend_trained_model
 
 def send_to_s3(s3_url, local_url):
+    # writes object to local file and sends to s3
     return

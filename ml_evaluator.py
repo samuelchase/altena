@@ -73,6 +73,7 @@ class MLEvaluator(object):
                               'test_data_s3_key': self.test_data_s3_key,
                              }
 
+        register_model(user_name, model_name)
         self.save_instance_info()
 
     def data_from_s3(self, s3_url):
@@ -89,7 +90,7 @@ class MLEvaluator(object):
         redis_client.set(k, json.dumps(self.instance_info))
         k = '{}_{}_instances'.format(self.user_name, self.model_name)
         print(k)
-        redis_client.lpush(k, self.instance_name)
+        redis_client.lpush(k, '{}_{}_{}'.format(self.user_name, self.model_name, self.instance_name))
 
     def load_model(self):
         # s3 = boto3.resource('s3')

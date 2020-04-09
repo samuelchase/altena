@@ -36,11 +36,15 @@ def get_model_instances(user_name, model_name):
 
 def get_instance_runs(user_name, model_name, instance_name):
     instance_names = get_model_instance_names(user_name, model_name)
-    if '{}_{}_{}'.format(user_name, model_name, instance_name) not in instance_names:
+    full_instance_name = '{}_{}_{}'.format(user_name, model_name, instance_name)
+    print(full_instance_name)
+    if full_instance_name not in instance_names:
         return []
 
     key = '{}_{}_{}_runs'.format(user_name, model_name, instance_name)
     run_names = redis_client.lrange(key, 0, -1)
+    print('run names for key {}'.format(key))
+    print(run_names)
     runs = [json.loads(redis_client.get(r)) for r in run_names]
     return runs
 

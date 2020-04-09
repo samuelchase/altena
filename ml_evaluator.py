@@ -15,7 +15,7 @@ def get_user_models(user_name):
     return redis_client.lrange('{}_models'.format(user_name), 0, -1)
 
 def get_model_instance_names(user_name, model_name):
-    models = get_user_models(user_name)
+    models = [s.decode('ascii') for s in get_user_models(user_name)]
     if model_name not in models:
         return []
 
@@ -23,7 +23,7 @@ def get_model_instance_names(user_name, model_name):
     return redis_client.lrange(key, 0, -1)
 
 def get_model_instances(user_name, model_name):
-    instance_names = get_model_instance_names(user_name, model_name)
+    instance_names = [s.decode('ascii') for s in get_model_instance_names(user_name, model_name)]
     if not instance_names:
         return []
 

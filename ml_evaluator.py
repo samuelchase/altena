@@ -108,8 +108,8 @@ class MLEvaluator(object):
         redis_client.set(run_name + "_test_results", s3_url)
 
     def run_k_crossfold_validation(self, k, shuffle=True, random_gen=1):
-        data = data_from_s3(self.train_data_s3_key)
-        model = load_model(self.model_s3_key)
+        data = self.data_from_s3(self.train_data_s3_key)
+        model = self.load_model(self.model_s3_key)
         kfold = KFold(k, shuffle, random_gen)
         i = 0
         for train, test in kfold.split(data):

@@ -32,7 +32,7 @@ def run_k_crossfold_validation():
 
     user_name = req_data['user_name']
     model_name = req_data['model_name']
-    instance_name = ['instance_name']
+    instance_name = req_data['instance_name']
     hyperparams = req_data['hyperparams']
 
     model_s3_key = req_data['model_s3_key']

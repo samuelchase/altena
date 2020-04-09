@@ -110,7 +110,7 @@ class MLEvaluator(object):
 
     def run_k_crossfold_validation(self, k, shuffle=True, random_gen=1):
         data = self.data_from_s3(self.train_data_s3_key)
-        model = self.load_model(self.model_s3_key)
+        model = self.load_model()
         kfold = KFold(k, shuffle, random_gen)
         i = 0
         for train, test in kfold.split(data):

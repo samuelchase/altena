@@ -28,7 +28,7 @@ d = {
 
 
 response = requests.post('http://127.0.0.1:5000/evaluator/kfold', json=d)
-print(response.content)
+print(json.loads(response.content))
 
 print('\nget models')
 response = requests.get('http://127.0.0.1:5000/models/sam/')
